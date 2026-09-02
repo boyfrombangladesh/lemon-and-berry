@@ -102,7 +102,7 @@
             display: grid;
             grid-template-columns: repeat(2, 1fr);
             gap: 12px;
-            padding-bottom: 40px;
+            padding-bottom: 30px;
         }
         .flip-card {
             background-color: transparent;
@@ -176,6 +176,46 @@
             backdrop-filter: blur(4px);
             text-transform: uppercase;
         }
+
+        /* --- THE LOVE LETTER --- */
+        .love-letter-container {
+            background: #1a1a1a;
+            border-top: 4px solid #0066b1;
+            border-radius: 12px;
+            padding: 25px 20px;
+            margin-bottom: 40px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.8);
+            position: relative;
+            overflow: hidden;
+        }
+        .love-letter-container::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: linear-gradient(135deg, rgba(0, 102, 177, 0.1), rgba(227, 38, 54, 0.1));
+            pointer-events: none;
+        }
+        .love-letter-container h2 {
+            margin-top: 0;
+            font-weight: 300;
+            letter-spacing: 2px;
+            color: #fff;
+            text-align: center;
+            border-bottom: 1px solid #333;
+            padding-bottom: 15px;
+        }
+        .love-letter-container p {
+            font-size: 15px;
+            line-height: 1.6;
+            color: #ddd;
+            margin-bottom: 20px;
+        }
+        .signature {
+            text-align: right;
+            font-style: italic;
+            color: #ffeb3b;
+            font-weight: bold;
+        }
     </style>
 </head>
 <body>
@@ -210,6 +250,15 @@
     <!-- Gallery -->
     <div class="gallery-container" id="photoGallery"></div>
 
+    <!-- The Reassurance Letter -->
+    <div class="love-letter-container">
+        <h2>To My Beautiful Berry</h2>
+        <p>Nicale, I want you to know how deeply sorry I am for what happened last week. Walking away was a mistake I will never make again. You are the absolute love of my life, my safe place, and my best friend.</p>
+        <p>Whether we are arguing over Pedros, battling over the temperature because you're freezing and I'm burning up, or laughing about me blaming a Cloudy on something else, there is nowhere else I would ever rather be than right by your side. I am fully committed to you, to us, and to protecting your beautiful heart forever.</p>
+        <p>Happy one month anniversary. I love you more than words can say, and this is just the beginning.</p>
+        <p class="signature">- Your Lemon 🍋</p>
+    </div>
+
     <script>
         // --- GAME LOGIC 2.0 ---
         const canvas = document.getElementById('gameCanvas');
@@ -230,7 +279,7 @@
         resizeCanvas();
 
         let carX = canvas.width / 2;
-        let carY = canvas.height - 150;
+        let carY = canvas.height - 180;
 
         // Smooth Touch Controls
         canvas.addEventListener('touchmove', (e) => { 
@@ -240,32 +289,75 @@
             carX = e.clientX; 
         });
 
-        // Spawn Fruits and Obstacles
+        // Spawn Massive Fruits and Obstacles
         function spawnItem() {
             if(!gameActive || sportModeTriggered) return;
             
-            let isObstacle = Math.random() > 0.7; // 30% chance for a traffic cone
+            let isObstacle = Math.random() > 0.7; 
             items.push({
-                x: Math.random() * (canvas.width - 80) + 40,
-                y: -50,
+                x: Math.random() * (canvas.width - 100) + 50,
+                y: -80,
                 type: isObstacle ? '🚧' : (Math.random() > 0.5 ? '🍓' : '🍋'),
-                speed: (canvas.height / 120) * gameSpeed + (Math.random() * 2),
+                speed: (canvas.height / 100) * gameSpeed + (Math.random() * 2),
                 isObstacle: isObstacle
             });
-            setTimeout(spawnItem, 500 - (gameSpeed * 50)); 
+            setTimeout(spawnItem, 600 - (gameSpeed * 50)); 
         }
         setTimeout(spawnItem, 500);
 
         function createParticles(x, y, color) {
-            for(let i = 0; i < 15; i++) {
+            for(let i = 0; i < 20; i++) {
                 particles.push({
                     x: x, y: y,
-                    vx: (Math.random() - 0.5) * 10,
-                    vy: (Math.random() - 0.5) * 10,
+                    vx: (Math.random() - 0.5) * 12,
+                    vy: (Math.random() - 0.5) * 12,
                     life: 1.0,
                     color: color
                 });
             }
+        }
+
+        // Custom drawn White BMW 320i
+        function drawBMW(x, y) {
+            ctx.save();
+            ctx.translate(x, y);
+            
+            // White Chassis
+            ctx.fillStyle = '#ffffff';
+            ctx.beginPath();
+            ctx.roundRect(-40, -80, 80, 160, 15);
+            ctx.fill();
+            
+            // Windshield and Windows
+            ctx.fillStyle = '#111111';
+            ctx.beginPath(); 
+            ctx.roundRect(-34, -40, 68, 60, 5); // Cabin area
+            ctx.fill();
+            
+            // White Roof
+            ctx.fillStyle = '#ffffff';
+            ctx.fillRect(-30, -25, 60, 35);
+            
+            // Sunroof
+            ctx.fillStyle = '#111111';
+            ctx.fillRect(-20, -20, 40, 20);
+
+            // BMW Grille
+            ctx.fillStyle = '#000000';
+            ctx.fillRect(-16, -78, 12, 6);
+            ctx.fillRect(4, -78, 12, 6);
+            
+            // Headlights
+            ctx.fillStyle = '#e5f2ff';
+            ctx.fillRect(-36, -75, 16, 8);
+            ctx.fillRect(20, -75, 16, 8);
+            
+            // Taillights
+            ctx.fillStyle = '#e32636';
+            ctx.fillRect(-38, 72, 20, 8);
+            ctx.fillRect(18, 72, 20, 8);
+            
+            ctx.restore();
         }
 
         function drawGame() {
@@ -278,23 +370,23 @@
             // Draw Glowing M-Series Stripes on shoulders
             ctx.lineWidth = 6;
             ctx.shadowBlur = 15;
-            let mColors = ['#0066b1', '#00205b', '#e32636']; // Light Blue, Dark Blue, Red
+            let mColors = ['#0066b1', '#00205b', '#e32636']; 
             for(let i=0; i<3; i++) {
                 ctx.strokeStyle = mColors[i];
                 ctx.shadowColor = mColors[i];
                 ctx.beginPath();
-                ctx.moveTo(15 + (i*8), 0); ctx.lineTo(15 + (i*8), canvas.height); // Left Shoulder
-                ctx.moveTo(canvas.width - 15 - (i*8), 0); ctx.lineTo(canvas.width - 15 - (i*8), canvas.height); // Right Shoulder
+                ctx.moveTo(15 + (i*8), 0); ctx.lineTo(15 + (i*8), canvas.height); 
+                ctx.moveTo(canvas.width - 15 - (i*8), 0); ctx.lineTo(canvas.width - 15 - (i*8), canvas.height); 
                 ctx.stroke();
             }
-            ctx.shadowBlur = 0; // Reset shadow
+            ctx.shadowBlur = 0; 
 
             // Fast Moving Center Dashes
             ctx.lineWidth = 4;
             ctx.strokeStyle = '#333';
-            ctx.setLineDash([40, 40]);
-            laneOffset += 10 * gameSpeed;
-            if(laneOffset > 80) laneOffset = 0;
+            ctx.setLineDash([50, 50]);
+            laneOffset += 12 * gameSpeed;
+            if(laneOffset > 100) laneOffset = 0;
             ctx.lineDashOffset = -laneOffset;
             
             ctx.beginPath();
@@ -302,23 +394,23 @@
             ctx.moveTo((canvas.width / 3) * 2, 0); ctx.lineTo((canvas.width / 3) * 2, canvas.height);
             ctx.stroke();
 
-            // Handle Entities
-            ctx.font = "40px Arial";
+            // Handle Massive Entities
+            ctx.font = "80px Arial"; // Far bigger fruits
             for(let i = 0; i < items.length; i++) {
                 let item = items[i];
                 item.y += item.speed;
-                ctx.fillText(item.type, item.x - 20, item.y + 20);
+                ctx.fillText(item.type, item.x - 40, item.y + 40);
                 
-                // Collision
-                if(Math.abs(item.x - carX) < 45 && Math.abs(item.y - carY) < 45) {
+                // Collision Hitbox Scaled Up
+                if(Math.abs(item.x - carX) < 70 && Math.abs(item.y - carY) < 100) {
                     if(item.isObstacle) {
-                        score = Math.max(0, score - 1); // Hit a cone, lose a point
-                        gameSpeed = 1; // Kill momentum
-                        ctx.fillStyle = "rgba(255,0,0,0.3)";
+                        score = Math.max(0, score - 1); 
+                        gameSpeed = 1; 
+                        ctx.fillStyle = "rgba(255,0,0,0.4)";
                         ctx.fillRect(0,0,canvas.width,canvas.height);
                     } else {
                         score++;
-                        gameSpeed += 0.05; // Go slightly faster
+                        gameSpeed += 0.05; 
                         createParticles(item.x, item.y, item.type === '🍓' ? '#e32636' : '#ffeb3b');
                         
                         if(score >= 10 && !sportModeTriggered) {
@@ -327,7 +419,7 @@
                     }
                     items.splice(i, 1);
                     i--;
-                } else if (item.y > canvas.height + 50) {
+                } else if (item.y > canvas.height + 100) {
                     items.splice(i, 1);
                     i--;
                 }
@@ -341,16 +433,15 @@
                 if(p.life <= 0) { particles.splice(i, 1); i--; continue; }
                 ctx.globalAlpha = p.life;
                 ctx.fillStyle = p.color;
-                ctx.fillRect(p.x, p.y, 6, 6);
+                ctx.fillRect(p.x, p.y, 8, 8);
                 ctx.globalAlpha = 1.0;
             }
             
-            // Draw Car (Accelerates up if Sport Mode triggers)
+            // Draw Massive BMW 320i
             if(sportModeTriggered) {
-                carY -= 25; // Shoot off screen
+                carY -= 35; 
             }
-            ctx.font = "60px Arial";
-            ctx.fillText("🏎️", carX - 30, carY + 30);
+            drawBMW(carX, carY);
             
             // Draw UI
             if(!sportModeTriggered) {
@@ -360,7 +451,7 @@
                 ctx.fillRect(40, 60, (score / 10) * (canvas.width - 80), 15);
                 
                 ctx.fillStyle = 'white';
-                ctx.font = 'bold 16px Arial';
+                ctx.font = 'bold 18px Arial';
                 ctx.textAlign = 'center';
                 ctx.fillText("Dodge 🚧 | Catch 10 🍓 or 🍋", canvas.width / 2, 105);
                 ctx.textAlign = 'left';
@@ -378,7 +469,7 @@
 
         function triggerSportMode() {
             sportModeTriggered = true;
-            setTimeout(unlockDashboard, 1500); // Wait for car to zoom off
+            setTimeout(unlockDashboard, 1500); 
         }
 
         function unlockDashboard() {
@@ -388,28 +479,28 @@
             setTimeout(() => overlay.style.display = 'none', 1500);
         }
 
-        // --- 2-SENTENCE REASSURANCE & INSIDE JOKE MESSAGES (NICALE) ---
+        // --- PERSONALIZED MESSAGES ---
         const sweetMessages = [
-            "I know I hurt you when I walked away, but I promise I am never letting you go again. You are my forever, Nicale, and I'll spend every day proving that your heart is safe with me.",
-            "I am so sorry for making you feel scared and closed off last week. I am here to stay, completely yours, even when I'm blaming my Cloudys on the dog.",
-            "Happy one month to the girl who holds my entire heart. I know things got hard, but choosing you, Nicale, is the easiest decision I will ever make.",
-            "You are the most beautiful part of my life, and I am so lucky you gave us another chance. I promise to protect your heart as fiercely as I love it.",
-            "I know rebuilding trust takes time, and I am ready to put in all the work for you. Just please don't make me sleep on the couch the next time a massive Cloudy slips out.",
+            "I know I hurt you when I walked away, but I promise I am never letting you go again. You are my forever, Nicale, and my heart is completely safe with you.",
+            "Even with our huge height difference, when I look into your eyes I see my entire future. I absolutely love looking down and seeing the most beautiful girl in the world.",
+            "You can have all the Mint Choc ice cream you want, as long as I get to eat my Double Choc right next to you. We have different tastes, but we are a perfect match.",
+            "You are literally always freezing while I'm always hot, but I will gladly be your personal heater for the rest of my life. Holding you close is my favorite place to be.",
+            "I have to admit, you are an absolutely amazing driver, and you look gorgeous behind the wheel. I'd ride shotgun with you anywhere, especially in a BMW 320i.",
+            "I know you despise Pedros and I completely love it, but I would eat anywhere as long as you're sitting across the table from me. Every meal is perfect when it's with you.",
+            "I know you absolutely hate mince samoosas, but I’d give up every single one of them just to see you smile. You are the sweetest thing in my life, Nicale.",
             "Leaving was the biggest mistake I've ever made, and I will spend my life making it up to you. You are my safe place, my best friend, and my only love.",
-            "Every time I look at you, I am reminded of exactly why I came back. We are meant to be together, through every high, every low, and every terrible Cloudy.",
-            "I understand why you feel guarded right now, but I am not going anywhere ever again. You are the only future I want, my beautiful Berry.",
-            "You are the strongest, most incredible woman I know, Nicale, and I hate that I made you doubt us. I love you with everything I have, and I'm staying right here by your side.",
-            "One month is just the beginning of our story, and I promise the next chapters will be filled with so much love. I am so deeply in love with you, and I will never take you for granted again.",
-            "I want to be the reason you feel safe, loved, and completely secure. Even if my Cloudys threaten to ruin the romantic mood, my heart is always entirely yours.",
+            "I will gladly take the blame for the occasional Cloudy if it means I get to hear you laugh. You are my best friend and the absolute love of my life.",
+            "One month is just the beginning of our story, and I promise the next chapters will be filled with so much love. I am so deeply in love with you, Berry.",
+            "I want to be the reason you feel safe, loved, and completely secure every single day. My heart belongs entirely to you, and I am never taking it back.",
+            "Every time I look at you, I am reminded of exactly why we belong together. We are meant to be, through every high, every low, and every drive we take.",
             "Thank you for being brave enough to let me back in. I will spend every single day showing you that your trust is completely secure with me.",
-            "When we stopped speaking for those three days, my whole world went completely dark. You are my light, my love, and my forever passenger.",
-            "I know words aren't enough right now, so I will show you with my actions every single day. You are my one and only, and I am never walking away from this.",
-            "I love you more than I could ever possibly explain, Nicale. You can trust me to hold you close, keep you safe, and warn you before a Cloudy hits.",
-            "My biggest fear is ever losing you again. I am so hopelessly in love with you, and I am here for the long haul.",
-            "You are my soulmate, my best friend, and the girl of my absolute dreams. I am so sorry for the tears, and I promise to bring you nothing but happiness from now on.",
-            "No rough patch will ever be stronger than the love I have for you. I am yours completely, through every stormy day and every single Cloudy.",
-            "I know you're scared, but please know that my heart belongs entirely to you. I will patiently wait for your walls to come down, because you are worth everything to me.",
-            "Happy one month to my beautiful optometrist. Nicale, I see my whole future in your eyes, and I am never letting it fade."
+            "You are the strongest, most incredible woman I know, and I am so lucky to call you mine. I promise to protect your heart as fiercely as I love it.",
+            "My biggest fear is ever losing you again. I am hopelessly in love with you, Nicale, and I am here for the long haul.",
+            "No rough patch will ever be stronger than the love I have for you. I am yours completely, through every stormy day and every beautiful moment.",
+            "I know you feel guarded right now, but please know that my heart belongs entirely to you. I will patiently wait for your walls to come down, because you are worth everything.",
+            "Happy one month to my beautiful, brilliant optometrist. I see my whole future in your eyes, and I am never letting it fade.",
+            "You are my soulmate, my best friend, and the girl of my absolute dreams. I am yours forever, Nicale.",
+            "I love you more than I could ever possibly explain. You are my entire world, and I am never letting you go."
         ];
 
         // --- GALLERY BUILDER (VIDEOS FIRST, THEN IMAGES) ---
@@ -417,7 +508,6 @@
         const totalItems = 175;
         let messageCounter = 0; 
 
-        // Loop 1: Videos First
         for (let i = 1; i <= totalItems; i++) {
             let msg = sweetMessages[messageCounter % sweetMessages.length];
             messageCounter++; 
@@ -425,7 +515,6 @@
             gallery.appendChild(vidCard);
         }
 
-        // Loop 2: Images Underneath
         for (let i = 1; i <= totalItems; i++) {
             let msg = sweetMessages[messageCounter % sweetMessages.length];
             messageCounter++; 
