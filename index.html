@@ -29,19 +29,20 @@
         #gameCanvas {
             width: 100%;
             height: 100%;
-            touch-action: none; /* Prevents mobile pull-to-refresh while steering */
+            touch-action: none;
         }
         .btn-skip {
             position: absolute;
-            bottom: 30px;
-            background: rgba(227, 38, 54, 0.8);
+            bottom: 40px;
+            background: rgba(227, 38, 54, 0.9);
             color: white;
             border: none;
-            padding: 10px 20px;
-            border-radius: 20px;
+            padding: 12px 24px;
+            border-radius: 25px;
             z-index: 10;
-            font-size: 12px;
+            font-size: 14px;
             text-transform: uppercase;
+            font-weight: bold;
             cursor: pointer;
         }
 
@@ -50,47 +51,50 @@
             text-align: center;
             margin-bottom: 20px;
             margin-top: 10px;
-            border-bottom: 2px solid #0066b1; /* BMW Blue */
+            border-bottom: 2px solid #0066b1;
             padding-bottom: 10px;
         }
         .header h1 { font-weight: 300; letter-spacing: 2px; margin-bottom: 5px; font-size: 24px;}
         .subtitle { font-size: 12px; color: #888; margin-top: 0; }
 
-        /* --- OPTOMETRIST EYE CHART --- */
+        /* --- MASSIVE OPTOMETRIST EYE CHART --- */
         .bmw-widget {
             background-color: #1a1a1a;
-            border-top: 3px solid #e32636; /* BMW Red */
+            border-top: 3px solid #e32636;
             border-radius: 12px;
-            padding: 15px;
+            padding: 20px 10px;
             text-align: center;
             margin-bottom: 30px;
             box-shadow: 0 4px 15px rgba(0,0,0,0.5);
         }
-        .bmw-widget h3 { margin-top: 0; color: #ccc; font-size: 12px; letter-spacing: 1px;}
+        .bmw-widget h3 { margin-top: 0; color: #ccc; font-size: 14px; letter-spacing: 2px; text-transform: uppercase;}
         .snellen-chart {
             font-family: 'Courier New', monospace;
             font-weight: bold;
-            letter-spacing: 6px;
-            filter: blur(5px);
-            transition: filter 2s ease-in-out;
-            margin: 15px 0;
+            letter-spacing: 10px;
+            filter: blur(6px);
+            transition: filter 2.5s ease-in-out;
+            margin: 25px 0;
         }
         .clear-vision { filter: blur(0px); }
-        .row-1 { font-size: 40px; }
-        .row-2 { font-size: 30px; }
-        .row-3 { font-size: 22px; }
-        .row-4 { font-size: 16px; }
-        .row-5 { font-size: 12px; color: #ffeb3b; letter-spacing: 2px; margin-top: 5px;}
+        
+        /* Greatly increased font sizes */
+        .row-1 { font-size: 65px; margin-bottom: 10px; }
+        .row-2 { font-size: 50px; margin-bottom: 10px; }
+        .row-3 { font-size: 38px; margin-bottom: 10px; }
+        .row-4 { font-size: 26px; margin-bottom: 10px; }
+        .row-5 { font-size: 18px; color: #ffeb3b; letter-spacing: 3px; margin-top: 15px;}
         
         .btn-calibrate {
-            padding: 8px 16px;
+            padding: 12px 24px;
             background-color: #0066b1;
             color: white;
             border: none;
             border-radius: 5px;
             cursor: pointer;
             text-transform: uppercase;
-            font-size: 12px;
+            font-size: 14px;
+            font-weight: bold;
         }
 
         /* --- 2-COLUMN GRID GALLERY --- */
@@ -103,7 +107,7 @@
         .flip-card {
             background-color: transparent;
             width: 100%;
-            aspect-ratio: 3 / 4; /* Perfect portrait ratio, less cropping */
+            aspect-ratio: 3 / 4;
             perspective: 1000px;
         }
         .flip-card-inner {
@@ -132,10 +136,16 @@
             justify-content: center;
             overflow: hidden;
         }
+        
+        /* Images are now clickable anywhere */
+        .clickable-image {
+            cursor: pointer;
+        }
+
         .flip-card-back {
             transform: rotateY(180deg);
             background: linear-gradient(135deg, #0066b1, #121212, #e32636);
-            padding: 10px;
+            padding: 15px;
             box-sizing: border-box;
             cursor: pointer;
         }
@@ -143,7 +153,7 @@
             font-size: 14px;
             font-weight: 400;
             color: white;
-            line-height: 1.4;
+            line-height: 1.5;
             margin: 0;
         }
         .media-item {
@@ -153,30 +163,28 @@
             object-position: center;
         }
         
-        /* Smaller flip button for the 2-column layout */
-        .btn-flip {
+        /* Dedicated flip button for videos only */
+        .btn-flip-video {
             position: absolute;
-            top: 8px;
-            right: 8px;
-            background: rgba(0, 0, 0, 0.6);
+            bottom: 10px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(0, 102, 177, 0.9);
             color: white;
-            border: 1px solid rgba(255,255,255,0.3);
-            width: 28px;
-            height: 28px;
-            border-radius: 50%;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 20px;
             cursor: pointer;
             z-index: 10;
-            font-size: 14px;
+            font-size: 12px;
             backdrop-filter: blur(4px);
-            display: flex;
-            align-items: center;
-            justify-content: center;
+            text-transform: uppercase;
         }
     </style>
 </head>
 <body>
 
-    <!-- M-SERIES DASH MINI-GAME OVERLAY -->
+    <!-- M-SERIES DASH MINI-GAME -->
     <div id="startup-overlay">
         <canvas id="gameCanvas"></canvas>
         <button class="btn-skip" onclick="unlockDashboard()">Skip to Gift ⏩</button>
@@ -187,7 +195,7 @@
         <p class="subtitle">Driver: Lemon 🍋 | Passenger: Berry 🍓</p>
     </div>
 
-    <!-- Eye Chart -->
+    <!-- Massive Eye Chart -->
     <div class="bmw-widget">
         <h3>Vision Diagnostics</h3>
         <div id="eyeChart" class="snellen-chart">
@@ -197,12 +205,13 @@
             <div class="row-4">I L O V E</div>
             <div class="row-5">Y O U B E R R Y</div>
         </div>
+        <br>
         <button class="btn-calibrate" onclick="document.getElementById('eyeChart').classList.add('clear-vision')">
             Calibrate Vision
         </button>
     </div>
 
-    <!-- 2-Column Gallery -->
+    <!-- Gallery -->
     <div class="gallery-container" id="photoGallery"></div>
 
     <script>
@@ -223,9 +232,7 @@
 
         let carX = canvas.width / 2;
 
-        // Mobile touch steering
         canvas.addEventListener('touchmove', (e) => { carX = e.touches[0].clientX; });
-        // Desktop mouse steering
         canvas.addEventListener('mousemove', (e) => { carX = e.clientX; });
 
         function spawnItem() {
@@ -234,20 +241,18 @@
                 x: Math.random() * (canvas.width - 60) + 30,
                 y: -50,
                 type: Math.random() > 0.5 ? '🍓' : '🍋',
-                speed: (canvas.height / 150) + Math.random() * 2 // Dynamic falling speed
+                speed: (canvas.height / 150) + Math.random() * 2
             });
-            setTimeout(spawnItem, 600); // Spawns a new item every 0.6s
+            setTimeout(spawnItem, 600);
         }
         setTimeout(spawnItem, 500);
 
         function drawGame() {
             if(!gameActive) return;
             
-            // Draw Asphalt
             ctx.fillStyle = '#121212';
             ctx.fillRect(0, 0, canvas.width, canvas.height);
             
-            // Draw Moving Road Lines
             ctx.lineWidth = 4;
             ctx.setLineDash([30, 30]);
             laneOffset += 6;
@@ -260,7 +265,6 @@
             ctx.moveTo((canvas.width / 3) * 2, 0); ctx.lineTo((canvas.width / 3) * 2, canvas.height);
             ctx.stroke();
 
-            // Handle Falling Berries & Lemons
             ctx.font = "35px Arial";
             let carY = canvas.height - 120;
             
@@ -269,7 +273,6 @@
                 item.y += item.speed;
                 ctx.fillText(item.type, item.x - 17, item.y + 17);
                 
-                // Collision Detection
                 if(Math.abs(item.x - carX) < 45 && Math.abs(item.y - carY) < 45) {
                     score++;
                     items.splice(i, 1);
@@ -285,20 +288,18 @@
                 }
             }
             
-            // Draw Player Car Emoji
             ctx.font = "50px Arial";
             ctx.fillText("🏎️", carX - 25, carY + 25);
             
-            // Draw UI (Score Bar)
             ctx.strokeStyle = '#fff';
-            ctx.strokeRect(20, 40, canvas.width - 40, 15);
+            ctx.strokeRect(20, 60, canvas.width - 40, 15);
             ctx.fillStyle = '#0066b1';
-            ctx.fillRect(20, 40, (score / 10) * (canvas.width - 40), 15);
+            ctx.fillRect(20, 60, (score / 10) * (canvas.width - 40), 15);
             
             ctx.fillStyle = 'white';
             ctx.font = '16px Arial';
             ctx.textAlign = 'center';
-            ctx.fillText("Catch 10 🍓 or 🍋 to unlock!", canvas.width / 2, 80);
+            ctx.fillText("Catch 10 🍓 or 🍋 to unlock!", canvas.width / 2, 105);
             ctx.textAlign = 'left';
 
             requestAnimationFrame(drawGame);
@@ -312,48 +313,49 @@
             setTimeout(() => overlay.style.display = 'none', 1000);
         }
 
-        // --- EXPANDED UNIQUE MESSAGES ---
+        // --- 2-SENTENCE REASSURANCE & INSIDE JOKE MESSAGES ---
         const sweetMessages = [
-            "Happy 1 month, bubba! 🍓",
-            "You're the Berry to my Lemon. 🍋",
-            "Every day is better with my girl.",
-            "I love you, babygirl.",
-            "My favorite view right here.",
-            "One month down, a lifetime to go.",
-            "20/20 vision, and I still only see you. 👓",
-            "You drive me crazy (in the best way). 🏎️",
-            "Best month ever with you, bubba.",
-            "You have my heart, babygirl.",
-            "Can't take my eyes off you.",
-            "My absolute favorite passenger.",
-            "The cutest optometrist in the world.",
-            "Every mile with you is my favorite.",
-            "You make my engine race! 💨",
-            "Forever your Lemon 🍋",
-            "Just the beginning of us.",
-            "You make everything brighter.",
-            "My favorite person to annoy.",
-            "Still falling for you every day."
+            "I know I hurt you when I walked away, but I promise I am never letting you go again. You are my forever, Berry, and I'll spend every day proving that your heart is safe with me.",
+            "I am so sorry for making you feel scared and closed off last week. I am here to stay, completely yours, even when I'm blaming my Cloudys on the dog.",
+            "Happy one month to the girl who holds my entire heart. I know things got hard, but choosing you is the easiest decision I will ever make.",
+            "You are the most beautiful part of my life, and I am so lucky you gave us another chance. I promise to protect your heart as fiercely as I love it.",
+            "I know rebuilding trust takes time, and I am ready to put in all the work for you. Just please don't make me sleep on the couch the next time a massive Cloudy slips out.",
+            "Leaving was the biggest mistake I've ever made, and I will spend my life making it up to you. You are my safe place, my best friend, and my only love.",
+            "Every time I look at you, I am reminded of exactly why I came back. We are meant to be together, through every high, every low, and every terrible Cloudy.",
+            "I understand why you feel guarded right now, but I am not going anywhere ever again. You are the only future I want, my beautiful Berry.",
+            "You are the strongest, most incredible woman I know, and I hate that I made you doubt us. I love you with everything I have, and I'm staying right here by your side.",
+            "One month is just the beginning of our story, and I promise the next chapters will be filled with so much love. I am so deeply in love with you, and I will never take you for granted again.",
+            "I want to be the reason you feel safe, loved, and completely secure. Even if my Cloudys threaten to ruin the romantic mood, my heart is always entirely yours.",
+            "Thank you for being brave enough to let me back in. I will spend every single day showing you that your trust is completely secure with me.",
+            "When we stopped speaking for those three days, my whole world went completely dark. You are my light, my love, and my forever passenger.",
+            "I know words aren't enough right now, so I will show you with my actions every single day. You are my one and only, and I am never walking away from this.",
+            "I love you more than I could ever possibly explain. You can trust me to hold you close, keep you safe, and warn you before a Cloudy hits.",
+            "My biggest fear is ever losing you again. I am so hopelessly in love with you, and I am here for the long haul.",
+            "You are my soulmate, my best friend, and the girl of my absolute dreams. I am so sorry for the tears, and I promise to bring you nothing but happiness from now on.",
+            "No rough patch will ever be stronger than the love I have for you. I am yours completely, through every stormy day and every single Cloudy.",
+            "I know you're scared, but please know that my heart belongs entirely to you. I will patiently wait for your walls to come down, because you are worth everything to me.",
+            "Happy one month to my beautiful optometrist. I see my whole future in your eyes, and I am never letting it fade."
         ];
 
-        // --- GALLERY BUILDER ---
+        // --- GALLERY BUILDER (VIDEOS FIRST, THEN IMAGES) ---
         const gallery = document.getElementById('photoGallery');
         const totalItems = 175;
-        let messageCounter = 0; // The rolling counter to prevent duplicates
+        let messageCounter = 0; 
 
+        // Loop 1: Load all Videos first
         for (let i = 1; i <= totalItems; i++) {
-            
-            // 1. Build Image Card
-            let msg1 = sweetMessages[messageCounter % sweetMessages.length];
+            let msg = sweetMessages[messageCounter % sweetMessages.length];
             messageCounter++; 
-            let imgCard = createFlipCard('img', `images/Berry (${i}).jpg`, msg1);
-            gallery.appendChild(imgCard);
-
-            // 2. Build Video Card
-            let msg2 = sweetMessages[messageCounter % sweetMessages.length];
-            messageCounter++; 
-            let vidCard = createFlipCard('video', `images/Berry (${i}).mp4`, msg2);
+            let vidCard = createFlipCard('video', `images/Berry (${i}).mp4`, msg);
             gallery.appendChild(vidCard);
+        }
+
+        // Loop 2: Load all Images underneath
+        for (let i = 1; i <= totalItems; i++) {
+            let msg = sweetMessages[messageCounter % sweetMessages.length];
+            messageCounter++; 
+            let imgCard = createFlipCard('img', `images/Berry (${i}).jpg`, msg);
+            gallery.appendChild(imgCard);
         }
 
         function createFlipCard(type, src, message) {
@@ -368,33 +370,41 @@
             
             let back = document.createElement('div');
             back.className = 'flip-card-back';
-            // Tapping the message flips it back to the picture
+            
+            // Tapping the message on the back flips it back to the front
             back.onclick = () => card.classList.remove('flipped');
             back.innerHTML = `<p>${message}</p>`;
             
-            // Floating ↺ button so it doesn't block the picture
-            let flipBtn = document.createElement('button');
-            flipBtn.className = 'btn-flip';
-            flipBtn.innerHTML = '↺';
-            flipBtn.onclick = (e) => {
-                e.stopPropagation(); 
-                card.classList.add('flipped');
-            };
-            front.appendChild(flipBtn);
-
             let media;
             if (type === 'img') {
                 media = document.createElement('img');
                 media.className = 'media-item';
                 media.loading = 'lazy';
+                
+                // For images: Clicking ANYWHERE on the front flips it
+                front.classList.add('clickable-image');
+                front.onclick = () => card.classList.add('flipped');
+                
             } else {
                 media = document.createElement('video');
                 media.className = 'media-item';
                 media.controls = true;
                 media.muted = true;
+                
+                // For videos: We must use a separate button, otherwise clicking to play/pause the video flips the card instead
+                let flipBtn = document.createElement('button');
+                flipBtn.className = 'btn-flip-video';
+                flipBtn.innerHTML = 'Read Message ↺';
+                flipBtn.onclick = (e) => {
+                    e.stopPropagation(); 
+                    card.classList.add('flipped');
+                };
+                front.appendChild(flipBtn);
             }
+            
             media.src = src;
             
+            // Instantly delete the card if the file type doesn't exist for this number
             media.onerror = function() { card.remove(); };
             
             front.appendChild(media);
