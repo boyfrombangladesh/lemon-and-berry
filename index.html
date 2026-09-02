@@ -220,6 +220,11 @@
 </head>
 <body>
 
+    <!-- BACKGROUND AUDIO PLAYER -->
+    <audio id="bgMusic" loop>
+        <source src="song.mp3" type="audio/mpeg">
+    </audio>
+
     <!-- M-SERIES DASH 2.0 MINI-GAME -->
     <div id="startup-overlay">
         <canvas id="gameCanvas"></canvas>
@@ -476,6 +481,14 @@
             gameActive = false;
             let overlay = document.getElementById('startup-overlay');
             overlay.style.opacity = '0';
+            
+            // --- AUDIO TRIGGER ---
+            let bgMusic = document.getElementById('bgMusic');
+            if (bgMusic) {
+                bgMusic.volume = 0.5; // Starts at 50% volume so it's not too loud
+                bgMusic.play().catch(e => console.log("Audio play blocked by browser:", e));
+            }
+
             setTimeout(() => overlay.style.display = 'none', 1500);
         }
 
