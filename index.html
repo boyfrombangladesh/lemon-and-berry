@@ -14,42 +14,75 @@
             overflow-x: hidden;
         }
 
+        /* --- BMW IGNITION MINI-GAME OVERLAY --- */
+        #startup-overlay {
+            position: fixed;
+            top: 0; left: 0; width: 100vw; height: 100vh;
+            background-color: #0d0d0d;
+            z-index: 9999;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            transition: opacity 1s ease;
+        }
+        .ignition-box {
+            text-align: center;
+            background: #1a1a1a;
+            padding: 40px 20px;
+            border-radius: 15px;
+            border-top: 4px solid #0066b1;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.8);
+            width: 80%;
+            max-width: 400px;
+        }
+        .ignition-box h2 { margin-top: 0; letter-spacing: 2px; }
+        .ignition-box p { color: #888; font-size: 14px; margin-bottom: 30px; }
+        
+        /* The Slider Game */
+        input[type=range] {
+            -webkit-appearance: none;
+            width: 100%;
+            background: linear-gradient(to right, #0066b1 33%, #121212 33%, #121212 66%, #e32636 66%);
+            height: 12px;
+            border-radius: 6px;
+            outline: none;
+        }
+        input[type=range]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            background-color: #fff;
+            cursor: pointer;
+            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="%23000"><path d="M18.92 6.01C18.72 5.42 18.16 5 17.5 5h-11c-.66 0-1.21.42-1.42 1.01L3 12v8c0 .55.45 1 1 1h1c.55 0 1-.45 1-1v-1h12v1c0 .55.45 1 1 1h1c.55 0 1-.45 1-1v-8l-2.08-5.99zM6.5 16c-.83 0-1.5-.67-1.5-1.5S5.67 13 6.5 13s1.5.67 1.5 1.5S7.33 16 6.5 16zm11 0c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5z"/></svg>');
+            background-size: 70%;
+            background-position: center;
+            background-repeat: no-repeat;
+            box-shadow: 0 0 15px rgba(255,255,255,0.4);
+        }
+
         /* --- HEADER & GLOBALS --- */
         .header {
             text-align: center;
             margin-bottom: 20px;
-            border-bottom: 2px solid #0066b1; /* BMW Blue */
+            border-bottom: 2px solid #0066b1;
             padding-bottom: 10px;
         }
-        .header h1 {
-            font-weight: 300;
-            letter-spacing: 2px;
-            margin-bottom: 5px;
-        }
-        .subtitle {
-            font-size: 14px;
-            color: #888;
-            margin-top: 0;
-        }
+        .header h1 { font-weight: 300; letter-spacing: 2px; margin-bottom: 5px; }
+        .subtitle { font-size: 14px; color: #888; margin-top: 0; }
 
-        /* --- OPTOMETRIST EYE CHART WIDGET --- */
+        /* --- EYE CHART --- */
         .bmw-widget {
             background-color: #1a1a1a;
-            border-top: 3px solid #e32636; /* BMW Red */
+            border-top: 3px solid #e32636;
             border-radius: 12px;
             padding: 20px;
             text-align: center;
             margin-bottom: 30px;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.5);
         }
-        .bmw-widget h3 {
-            margin-top: 0;
-            color: #ccc;
-            font-weight: 400;
-            letter-spacing: 1px;
-            text-transform: uppercase;
-            font-size: 14px;
-        }
+        .bmw-widget h3 { margin-top: 0; color: #ccc; font-size: 14px; }
         .snellen-chart {
             font-family: 'Courier New', monospace;
             font-weight: bold;
@@ -58,14 +91,12 @@
             transition: filter 2s ease-in-out;
             margin: 20px 0;
         }
-        .clear-vision {
-            filter: blur(0px);
-        }
+        .clear-vision { filter: blur(0px); }
         .row-1 { font-size: 50px; }
         .row-2 { font-size: 40px; }
         .row-3 { font-size: 30px; }
         .row-4 { font-size: 20px; }
-        .row-5 { font-size: 16px; color: #ffeb3b; /* Lemon Yellow */ letter-spacing: 4px; mt-2}
+        .row-5 { font-size: 16px; color: #ffeb3b; letter-spacing: 4px;}
         
         .btn-calibrate {
             padding: 10px 20px;
@@ -73,50 +104,98 @@
             color: white;
             border: none;
             border-radius: 5px;
-            font-size: 14px;
             cursor: pointer;
             text-transform: uppercase;
-            letter-spacing: 1px;
-            transition: background 0.3s;
-        }
-        .btn-calibrate:hover {
-            background-color: #004c85;
         }
 
-        /* --- MEDIA GALLERY WIDGET --- */
-        .gallery-header {
-            font-size: 14px;
-            color: #ccc;
-            letter-spacing: 2px;
-            text-transform: uppercase;
-            margin-bottom: 15px;
-            border-left: 3px solid #0066b1;
-            padding-left: 10px;
-        }
+        /* --- VERTICAL 3D FLIP GALLERY --- */
         .gallery-container {
             display: flex;
-            overflow-x: auto;
-            gap: 15px;
-            padding-bottom: 20px;
-            scroll-snap-type: x mandatory;
+            flex-direction: column; /* Forces vertical stacking */
+            align-items: center;
+            gap: 30px; /* Space between pictures */
+            padding-bottom: 40px;
         }
-        .gallery-container::-webkit-scrollbar {
-            display: none;
-        }
-        .gallery-item {
-            flex: 0 0 80vw;
+        .flip-card {
+            background-color: transparent;
+            width: 90vw;
             max-width: 400px;
             height: 60vh;
+            perspective: 1000px;
+        }
+        .flip-card-inner {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            text-align: center;
+            transition: transform 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            transform-style: preserve-3d;
+        }
+        .flip-card.flipped .flip-card-inner {
+            transform: rotateY(180deg);
+        }
+        .flip-card-front, .flip-card-back {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            -webkit-backface-visibility: hidden;
+            backface-visibility: hidden;
             border-radius: 12px;
-            object-fit: cover;
-            scroll-snap-align: center;
             box-shadow: 0 10px 20px rgba(0,0,0,0.5);
             border: 1px solid #333;
             background-color: #000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+        .flip-card-back {
+            transform: rotateY(180deg);
+            background: linear-gradient(135deg, #0066b1, #121212, #e32636);
+            padding: 20px;
+            box-sizing: border-box;
+            cursor: pointer;
+        }
+        .flip-card-back p {
+            font-size: 22px;
+            font-weight: 300;
+            color: white;
+            line-height: 1.5;
+        }
+        .media-item {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        /* Floating Flip Button so videos can still be played normally */
+        .btn-flip {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: rgba(0, 0, 0, 0.7);
+            color: white;
+            border: 1px solid rgba(255,255,255,0.3);
+            padding: 8px 12px;
+            border-radius: 8px;
+            cursor: pointer;
+            z-index: 10;
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            backdrop-filter: blur(4px);
         }
     </style>
 </head>
 <body>
+
+    <div id="startup-overlay">
+        <div class="ignition-box">
+            <h2>M-SERIES IGNITION</h2>
+            <p>Drag the car to start the engine and unlock your gift.</p>
+            <input type="range" id="ignitionSlider" min="0" max="100" value="0">
+        </div>
+    </div>
 
     <div class="header">
         <h1>iDRIVE: V 1.0</h1>
@@ -137,39 +216,100 @@
         </button>
     </div>
 
-    <div class="gallery-header">Media Archive</div>
     <div class="gallery-container" id="photoGallery"></div>
 
     <script>
+        // --- Game Logic ---
+        const slider = document.getElementById('ignitionSlider');
+        const overlay = document.getElementById('startup-overlay');
+        
+        slider.oninput = function() {
+            if (this.value == 100) {
+                overlay.style.opacity = '0';
+                setTimeout(() => overlay.style.display = 'none', 1000);
+            }
+        };
+
+        // --- Sweet Messages Array ---
+        const sweetMessages = [
+            "Happy 1 month, bubba! 🍓",
+            "You're the Berry to my Lemon. 🍋",
+            "Every day is better with my girl.",
+            "I love you, babygirl.",
+            "My favorite view right here.",
+            "One month down, a lifetime to go.",
+            "20/20 vision, and I still only see you. 👓",
+            "You drive me crazy (in the best way). 🏎️",
+            "Best month ever with you, bubba.",
+            "You have my heart, babygirl."
+        ];
+
+        // --- Gallery Builder ---
         const gallery = document.getElementById('photoGallery');
-        const totalItems = 175; // Total files shown in your screenshot
+        const totalItems = 175;
 
         for (let i = 1; i <= totalItems; i++) {
             
-            // 1. Load Images (Berry (1).jpg, etc.)
-            let img = document.createElement('img');
-            img.src = `images/Berry (${i}).jpg`; 
-            img.className = 'gallery-item';
-            img.loading = 'lazy';
-            
-            // Instantly removes the element if the .jpg doesn't exist
-            img.onerror = function() { 
-                this.remove(); 
-            };
-            gallery.appendChild(img);
+            // Loop through the messages so they keep repeating
+            let msgText = sweetMessages[i % sweetMessages.length];
 
-            // 2. Load Videos (Berry (1).mp4, etc.)
-            let vid = document.createElement('video');
-            vid.src = `images/Berry (${i}).mp4`;
-            vid.className = 'gallery-item';
-            vid.controls = true;
-            vid.muted = true; // Auto-mutes to prevent audio blasts
+            // 1. Build Image Cards
+            let imgCard = createFlipCard('img', `images/Berry (${i}).jpg`, msgText);
+            gallery.appendChild(imgCard);
+
+            // 2. Build Video Cards
+            let vidCard = createFlipCard('video', `images/Berry (${i}).mp4`, msgText);
+            gallery.appendChild(vidCard);
+        }
+
+        // --- Card Generator Function ---
+        function createFlipCard(type, src, message) {
+            let card = document.createElement('div');
+            card.className = 'flip-card';
             
-            // Instantly removes the element if the .mp4 doesn't exist
-            vid.onerror = function() { 
-                this.remove(); 
+            let inner = document.createElement('div');
+            inner.className = 'flip-card-inner';
+            
+            let front = document.createElement('div');
+            front.className = 'flip-card-front';
+            
+            let back = document.createElement('div');
+            back.className = 'flip-card-back';
+            // Tapping the message flips it back to the picture
+            back.onclick = () => card.classList.remove('flipped');
+            back.innerHTML = `<p>${message}</p>`;
+            
+            // Floating button to trigger flip
+            let flipBtn = document.createElement('button');
+            flipBtn.className = 'btn-flip';
+            flipBtn.innerHTML = 'Tap to read ↺';
+            flipBtn.onclick = (e) => {
+                e.stopPropagation(); // Prevents clicking the video beneath
+                card.classList.add('flipped');
             };
-            gallery.appendChild(vid);
+            front.appendChild(flipBtn);
+
+            let media;
+            if (type === 'img') {
+                media = document.createElement('img');
+                media.className = 'media-item';
+                media.loading = 'lazy';
+            } else {
+                media = document.createElement('video');
+                media.className = 'media-item';
+                media.controls = true;
+                media.muted = true;
+            }
+            media.src = src;
+            
+            media.onerror = function() { card.remove(); };
+            
+            front.appendChild(media);
+            inner.appendChild(front);
+            inner.appendChild(back);
+            card.appendChild(inner);
+            
+            return card;
         }
     </script>
 </body>
