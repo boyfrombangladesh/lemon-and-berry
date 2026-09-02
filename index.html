@@ -10,15 +10,15 @@
             color: #ffffff;
             font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
             margin: 0;
-            padding: 20px;
+            padding: 10px;
             overflow-x: hidden;
         }
 
-        /* --- BMW IGNITION MINI-GAME OVERLAY --- */
+        /* --- M-SERIES DASH MINI-GAME OVERLAY --- */
         #startup-overlay {
             position: fixed;
             top: 0; left: 0; width: 100vw; height: 100vh;
-            background-color: #0d0d0d;
+            background-color: #121212;
             z-index: 9999;
             display: flex;
             flex-direction: column;
@@ -26,101 +26,84 @@
             justify-content: center;
             transition: opacity 1s ease;
         }
-        .ignition-box {
-            text-align: center;
-            background: #1a1a1a;
-            padding: 40px 20px;
-            border-radius: 15px;
-            border-top: 4px solid #0066b1;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.8);
-            width: 80%;
-            max-width: 400px;
-        }
-        .ignition-box h2 { margin-top: 0; letter-spacing: 2px; }
-        .ignition-box p { color: #888; font-size: 14px; margin-bottom: 30px; }
-        
-        /* The Slider Game */
-        input[type=range] {
-            -webkit-appearance: none;
+        #gameCanvas {
             width: 100%;
-            background: linear-gradient(to right, #0066b1 33%, #121212 33%, #121212 66%, #e32636 66%);
-            height: 12px;
-            border-radius: 6px;
-            outline: none;
+            height: 100%;
+            touch-action: none; /* Prevents mobile pull-to-refresh while steering */
         }
-        input[type=range]::-webkit-slider-thumb {
-            -webkit-appearance: none;
-            appearance: none;
-            width: 45px;
-            height: 45px;
-            border-radius: 50%;
-            background-color: #fff;
+        .btn-skip {
+            position: absolute;
+            bottom: 30px;
+            background: rgba(227, 38, 54, 0.8);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 20px;
+            z-index: 10;
+            font-size: 12px;
+            text-transform: uppercase;
             cursor: pointer;
-            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="%23000"><path d="M18.92 6.01C18.72 5.42 18.16 5 17.5 5h-11c-.66 0-1.21.42-1.42 1.01L3 12v8c0 .55.45 1 1 1h1c.55 0 1-.45 1-1v-1h12v1c0 .55.45 1 1 1h1c.55 0 1-.45 1-1v-8l-2.08-5.99zM6.5 16c-.83 0-1.5-.67-1.5-1.5S5.67 13 6.5 13s1.5.67 1.5 1.5S7.33 16 6.5 16zm11 0c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5z"/></svg>');
-            background-size: 70%;
-            background-position: center;
-            background-repeat: no-repeat;
-            box-shadow: 0 0 15px rgba(255,255,255,0.4);
         }
 
         /* --- HEADER & GLOBALS --- */
         .header {
             text-align: center;
             margin-bottom: 20px;
-            border-bottom: 2px solid #0066b1;
+            margin-top: 10px;
+            border-bottom: 2px solid #0066b1; /* BMW Blue */
             padding-bottom: 10px;
         }
-        .header h1 { font-weight: 300; letter-spacing: 2px; margin-bottom: 5px; }
-        .subtitle { font-size: 14px; color: #888; margin-top: 0; }
+        .header h1 { font-weight: 300; letter-spacing: 2px; margin-bottom: 5px; font-size: 24px;}
+        .subtitle { font-size: 12px; color: #888; margin-top: 0; }
 
-        /* --- EYE CHART --- */
+        /* --- OPTOMETRIST EYE CHART --- */
         .bmw-widget {
             background-color: #1a1a1a;
-            border-top: 3px solid #e32636;
+            border-top: 3px solid #e32636; /* BMW Red */
             border-radius: 12px;
-            padding: 20px;
+            padding: 15px;
             text-align: center;
             margin-bottom: 30px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.5);
         }
-        .bmw-widget h3 { margin-top: 0; color: #ccc; font-size: 14px; }
+        .bmw-widget h3 { margin-top: 0; color: #ccc; font-size: 12px; letter-spacing: 1px;}
         .snellen-chart {
             font-family: 'Courier New', monospace;
             font-weight: bold;
-            letter-spacing: 8px;
+            letter-spacing: 6px;
             filter: blur(5px);
             transition: filter 2s ease-in-out;
-            margin: 20px 0;
+            margin: 15px 0;
         }
         .clear-vision { filter: blur(0px); }
-        .row-1 { font-size: 50px; }
-        .row-2 { font-size: 40px; }
-        .row-3 { font-size: 30px; }
-        .row-4 { font-size: 20px; }
-        .row-5 { font-size: 16px; color: #ffeb3b; letter-spacing: 4px;}
+        .row-1 { font-size: 40px; }
+        .row-2 { font-size: 30px; }
+        .row-3 { font-size: 22px; }
+        .row-4 { font-size: 16px; }
+        .row-5 { font-size: 12px; color: #ffeb3b; letter-spacing: 2px; margin-top: 5px;}
         
         .btn-calibrate {
-            padding: 10px 20px;
+            padding: 8px 16px;
             background-color: #0066b1;
             color: white;
             border: none;
             border-radius: 5px;
             cursor: pointer;
             text-transform: uppercase;
+            font-size: 12px;
         }
 
-        /* --- VERTICAL 3D FLIP GALLERY --- */
+        /* --- 2-COLUMN GRID GALLERY --- */
         .gallery-container {
-            display: flex;
-            flex-direction: column; /* Forces vertical stacking */
-            align-items: center;
-            gap: 30px; /* Space between pictures */
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 12px;
             padding-bottom: 40px;
         }
         .flip-card {
             background-color: transparent;
-            width: 90vw;
-            max-width: 400px;
-            height: 60vh;
+            width: 100%;
+            aspect-ratio: 3 / 4; /* Perfect portrait ratio, less cropping */
             perspective: 1000px;
         }
         .flip-card-inner {
@@ -128,7 +111,7 @@
             width: 100%;
             height: 100%;
             text-align: center;
-            transition: transform 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            transition: transform 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
             transform-style: preserve-3d;
         }
         .flip-card.flipped .flip-card-inner {
@@ -140,8 +123,8 @@
             height: 100%;
             -webkit-backface-visibility: hidden;
             backface-visibility: hidden;
-            border-radius: 12px;
-            box-shadow: 0 10px 20px rgba(0,0,0,0.5);
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.5);
             border: 1px solid #333;
             background-color: #000;
             display: flex;
@@ -152,49 +135,51 @@
         .flip-card-back {
             transform: rotateY(180deg);
             background: linear-gradient(135deg, #0066b1, #121212, #e32636);
-            padding: 20px;
+            padding: 10px;
             box-sizing: border-box;
             cursor: pointer;
         }
         .flip-card-back p {
-            font-size: 22px;
-            font-weight: 300;
+            font-size: 14px;
+            font-weight: 400;
             color: white;
-            line-height: 1.5;
+            line-height: 1.4;
+            margin: 0;
         }
         .media-item {
             width: 100%;
             height: 100%;
             object-fit: cover;
+            object-position: center;
         }
         
-        /* Floating Flip Button so videos can still be played normally */
+        /* Smaller flip button for the 2-column layout */
         .btn-flip {
             position: absolute;
-            top: 15px;
-            right: 15px;
-            background: rgba(0, 0, 0, 0.7);
+            top: 8px;
+            right: 8px;
+            background: rgba(0, 0, 0, 0.6);
             color: white;
             border: 1px solid rgba(255,255,255,0.3);
-            padding: 8px 12px;
-            border-radius: 8px;
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
             cursor: pointer;
             z-index: 10;
-            font-size: 12px;
-            text-transform: uppercase;
-            letter-spacing: 1px;
+            font-size: 14px;
             backdrop-filter: blur(4px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
     </style>
 </head>
 <body>
 
+    <!-- M-SERIES DASH MINI-GAME OVERLAY -->
     <div id="startup-overlay">
-        <div class="ignition-box">
-            <h2>M-SERIES IGNITION</h2>
-            <p>Drag the car to start the engine and unlock your gift.</p>
-            <input type="range" id="ignitionSlider" min="0" max="100" value="0">
-        </div>
+        <canvas id="gameCanvas"></canvas>
+        <button class="btn-skip" onclick="unlockDashboard()">Skip to Gift ⏩</button>
     </div>
 
     <div class="header">
@@ -202,8 +187,9 @@
         <p class="subtitle">Driver: Lemon 🍋 | Passenger: Berry 🍓</p>
     </div>
 
+    <!-- Eye Chart -->
     <div class="bmw-widget">
-        <h3>Optometrist Vision Diagnostics</h3>
+        <h3>Vision Diagnostics</h3>
         <div id="eyeChart" class="snellen-chart">
             <div class="row-1">1</div>
             <div class="row-2">M O</div>
@@ -216,21 +202,117 @@
         </button>
     </div>
 
+    <!-- 2-Column Gallery -->
     <div class="gallery-container" id="photoGallery"></div>
 
     <script>
-        // --- Game Logic ---
-        const slider = document.getElementById('ignitionSlider');
-        const overlay = document.getElementById('startup-overlay');
+        // --- GAME LOGIC ---
+        const canvas = document.getElementById('gameCanvas');
+        const ctx = canvas.getContext('2d');
+        let gameActive = true;
+        let score = 0;
+        let items = [];
+        let laneOffset = 0;
         
-        slider.oninput = function() {
-            if (this.value == 100) {
-                overlay.style.opacity = '0';
-                setTimeout(() => overlay.style.display = 'none', 1000);
-            }
-        };
+        function resizeCanvas() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        }
+        window.addEventListener('resize', resizeCanvas);
+        resizeCanvas();
 
-        // --- Sweet Messages Array ---
+        let carX = canvas.width / 2;
+
+        // Mobile touch steering
+        canvas.addEventListener('touchmove', (e) => { carX = e.touches[0].clientX; });
+        // Desktop mouse steering
+        canvas.addEventListener('mousemove', (e) => { carX = e.clientX; });
+
+        function spawnItem() {
+            if(!gameActive) return;
+            items.push({
+                x: Math.random() * (canvas.width - 60) + 30,
+                y: -50,
+                type: Math.random() > 0.5 ? '🍓' : '🍋',
+                speed: (canvas.height / 150) + Math.random() * 2 // Dynamic falling speed
+            });
+            setTimeout(spawnItem, 600); // Spawns a new item every 0.6s
+        }
+        setTimeout(spawnItem, 500);
+
+        function drawGame() {
+            if(!gameActive) return;
+            
+            // Draw Asphalt
+            ctx.fillStyle = '#121212';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+            
+            // Draw Moving Road Lines
+            ctx.lineWidth = 4;
+            ctx.setLineDash([30, 30]);
+            laneOffset += 6;
+            if(laneOffset > 60) laneOffset = 0;
+            ctx.lineDashOffset = -laneOffset;
+            
+            ctx.strokeStyle = '#333';
+            ctx.beginPath();
+            ctx.moveTo(canvas.width / 3, 0); ctx.lineTo(canvas.width / 3, canvas.height);
+            ctx.moveTo((canvas.width / 3) * 2, 0); ctx.lineTo((canvas.width / 3) * 2, canvas.height);
+            ctx.stroke();
+
+            // Handle Falling Berries & Lemons
+            ctx.font = "35px Arial";
+            let carY = canvas.height - 120;
+            
+            for(let i = 0; i < items.length; i++) {
+                let item = items[i];
+                item.y += item.speed;
+                ctx.fillText(item.type, item.x - 17, item.y + 17);
+                
+                // Collision Detection
+                if(Math.abs(item.x - carX) < 45 && Math.abs(item.y - carY) < 45) {
+                    score++;
+                    items.splice(i, 1);
+                    i--;
+                    
+                    if(score >= 10) {
+                        unlockDashboard();
+                        return;
+                    }
+                } else if (item.y > canvas.height + 50) {
+                    items.splice(i, 1);
+                    i--;
+                }
+            }
+            
+            // Draw Player Car Emoji
+            ctx.font = "50px Arial";
+            ctx.fillText("🏎️", carX - 25, carY + 25);
+            
+            // Draw UI (Score Bar)
+            ctx.strokeStyle = '#fff';
+            ctx.strokeRect(20, 40, canvas.width - 40, 15);
+            ctx.fillStyle = '#0066b1';
+            ctx.fillRect(20, 40, (score / 10) * (canvas.width - 40), 15);
+            
+            ctx.fillStyle = 'white';
+            ctx.font = '16px Arial';
+            ctx.textAlign = 'center';
+            ctx.fillText("Catch 10 🍓 or 🍋 to unlock!", canvas.width / 2, 80);
+            ctx.textAlign = 'left';
+
+            requestAnimationFrame(drawGame);
+        }
+        drawGame();
+
+        function unlockDashboard() {
+            gameActive = false;
+            let overlay = document.getElementById('startup-overlay');
+            overlay.style.opacity = '0';
+            setTimeout(() => overlay.style.display = 'none', 1000);
+        }
+
+        // --- EXPANDED UNIQUE MESSAGES ---
         const sweetMessages = [
             "Happy 1 month, bubba! 🍓",
             "You're the Berry to my Lemon. 🍋",
@@ -241,28 +323,39 @@
             "20/20 vision, and I still only see you. 👓",
             "You drive me crazy (in the best way). 🏎️",
             "Best month ever with you, bubba.",
-            "You have my heart, babygirl."
+            "You have my heart, babygirl.",
+            "Can't take my eyes off you.",
+            "My absolute favorite passenger.",
+            "The cutest optometrist in the world.",
+            "Every mile with you is my favorite.",
+            "You make my engine race! 💨",
+            "Forever your Lemon 🍋",
+            "Just the beginning of us.",
+            "You make everything brighter.",
+            "My favorite person to annoy.",
+            "Still falling for you every day."
         ];
 
-        // --- Gallery Builder ---
+        // --- GALLERY BUILDER ---
         const gallery = document.getElementById('photoGallery');
         const totalItems = 175;
+        let messageCounter = 0; // The rolling counter to prevent duplicates
 
         for (let i = 1; i <= totalItems; i++) {
             
-            // Loop through the messages so they keep repeating
-            let msgText = sweetMessages[i % sweetMessages.length];
-
-            // 1. Build Image Cards
-            let imgCard = createFlipCard('img', `images/Berry (${i}).jpg`, msgText);
+            // 1. Build Image Card
+            let msg1 = sweetMessages[messageCounter % sweetMessages.length];
+            messageCounter++; 
+            let imgCard = createFlipCard('img', `images/Berry (${i}).jpg`, msg1);
             gallery.appendChild(imgCard);
 
-            // 2. Build Video Cards
-            let vidCard = createFlipCard('video', `images/Berry (${i}).mp4`, msgText);
+            // 2. Build Video Card
+            let msg2 = sweetMessages[messageCounter % sweetMessages.length];
+            messageCounter++; 
+            let vidCard = createFlipCard('video', `images/Berry (${i}).mp4`, msg2);
             gallery.appendChild(vidCard);
         }
 
-        // --- Card Generator Function ---
         function createFlipCard(type, src, message) {
             let card = document.createElement('div');
             card.className = 'flip-card';
@@ -279,12 +372,12 @@
             back.onclick = () => card.classList.remove('flipped');
             back.innerHTML = `<p>${message}</p>`;
             
-            // Floating button to trigger flip
+            // Floating ↺ button so it doesn't block the picture
             let flipBtn = document.createElement('button');
             flipBtn.className = 'btn-flip';
-            flipBtn.innerHTML = 'Tap to read ↺';
+            flipBtn.innerHTML = '↺';
             flipBtn.onclick = (e) => {
-                e.stopPropagation(); // Prevents clicking the video beneath
+                e.stopPropagation(); 
                 card.classList.add('flipped');
             };
             front.appendChild(flipBtn);
