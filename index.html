@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BMW iDrive: Project Lemon & Berry</title>
+    <style>
+        body {
+            background-color: #121212;
+            color: #ffffff;
+            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            overflow-x: hidden;
+        }
+
+        /* --- HEADER & GLOBALS --- */
+        .header {
+            text-align: center;
+            margin-bottom: 20px;
+            border-bottom: 2px solid #0066b1; /* BMW Blue */
+            padding-bottom: 10px;
+        }
+        .header h1 {
+            font-weight: 300;
+            letter-spacing: 2px;
+            margin-bottom: 5px;
+        }
+        .subtitle {
+            font-size: 14px;
+            color: #888;
+            margin-top: 0;
+        }
+
+        /* --- OPTOMETRIST EYE CHART WIDGET --- */
+        .bmw-widget {
+            background-color: #1a1a1a;
+            border-top: 3px solid #e32636; /* BMW Red */
+            border-radius: 12px;
+            padding: 20px;
+            text-align: center;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.5);
+        }
+        .bmw-widget h3 {
+            margin-top: 0;
+            color: #ccc;
+            font-weight: 400;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            font-size: 14px;
+        }
+        .snellen-chart {
+            font-family: 'Courier New', monospace;
+            font-weight: bold;
+            letter-spacing: 8px;
+            filter: blur(5px);
+            transition: filter 2s ease-in-out;
+            margin: 20px 0;
+        }
+        .clear-vision {
+            filter: blur(0px);
+        }
+        .row-1 { font-size: 50px; }
+        .row-2 { font-size: 40px; }
+        .row-3 { font-size: 30px; }
+        .row-4 { font-size: 20px; }
+        .row-5 { font-size: 16px; color: #ffeb3b; /* Lemon Yellow */ letter-spacing: 4px; mt-2}
+        
+        .btn-calibrate {
+            padding: 10px 20px;
+            background-color: #0066b1;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 14px;
+            cursor: pointer;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: background 0.3s;
+        }
+        .btn-calibrate:hover {
+            background-color: #004c85;
+        }
+
+        /* --- MEDIA GALLERY WIDGET --- */
+        .gallery-header {
+            font-size: 14px;
+            color: #ccc;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            margin-bottom: 15px;
+            border-left: 3px solid #0066b1;
+            padding-left: 10px;
+        }
+        .gallery-container {
+            display: flex;
+            overflow-x: auto;
+            gap: 15px;
+            padding-bottom: 20px;
+            scroll-snap-type: x mandatory;
+        }
+        .gallery-container::-webkit-scrollbar {
+            display: none;
+        }
+        .gallery-item {
+            flex: 0 0 80vw;
+            max-width: 400px;
+            height: 60vh;
+            border-radius: 12px;
+            object-fit: cover;
+            scroll-snap-align: center;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.5);
+            border: 1px solid #333;
+            background-color: #000;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="header">
+        <h1>iDRIVE: V 1.0</h1>
+        <p class="subtitle">Driver: Lemon 🍋 | Passenger: Berry 🍓</p>
+    </div>
+
+    <div class="bmw-widget">
+        <h3>Optometrist Vision Diagnostics</h3>
+        <div id="eyeChart" class="snellen-chart">
+            <div class="row-1">1</div>
+            <div class="row-2">M O</div>
+            <div class="row-3">N T H</div>
+            <div class="row-4">I L O V E</div>
+            <div class="row-5">Y O U B E R R Y</div>
+        </div>
+        <button class="btn-calibrate" onclick="document.getElementById('eyeChart').classList.add('clear-vision')">
+            Calibrate Vision
+        </button>
+    </div>
+
+    <div class="gallery-header">Media Archive</div>
+    <div class="gallery-container" id="photoGallery"></div>
+
+    <script>
+        const gallery = document.getElementById('photoGallery');
+        const totalItems = 175; // Total files shown in your screenshot
+
+        for (let i = 1; i <= totalItems; i++) {
+            
+            // 1. Load Images (Berry (1).jpg, etc.)
+            let img = document.createElement('img');
+            img.src = `images/Berry (${i}).jpg`; 
+            img.className = 'gallery-item';
+            img.loading = 'lazy';
+            
+            // Instantly removes the element if the .jpg doesn't exist
+            img.onerror = function() { 
+                this.remove(); 
+            };
+            gallery.appendChild(img);
+
+            // 2. Load Videos (Berry (1).mp4, etc.)
+            let vid = document.createElement('video');
+            vid.src = `images/Berry (${i}).mp4`;
+            vid.className = 'gallery-item';
+            vid.controls = true;
+            vid.muted = true; // Auto-mutes to prevent audio blasts
+            
+            // Instantly removes the element if the .mp4 doesn't exist
+            vid.onerror = function() { 
+                this.remove(); 
+            };
+            gallery.appendChild(vid);
+        }
+    </script>
+</body>
+</html>
